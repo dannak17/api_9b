@@ -1,9 +1,7 @@
 import express from "express";
-import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import { Card } from "./models/Card.js";
 
-dotenv.config();
 const app = express();
 app.use(express.json());
 
@@ -139,7 +137,7 @@ app.delete("/deleteCard/:id", async (req, res) => {
 });
 
 app.get("/hello", (req, res) => {
-  res.status(200).send("hiola desde Node.js!");
+  res.status(200).send("hola desde Node.js!");
 });
 
 const PORT = process.env.PORT || 3000;
