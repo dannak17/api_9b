@@ -168,6 +168,26 @@ app.delete("/deleteCard/:id", async (req, res) => {
   }
 });
 
+//
+app.get("/endpoints", (req, res) => {
+  const baseUrl = "https://api-9b-sv8l.onrender.com";
+  const endpoints = [
+    { method: "POST", path: `${baseUrl}/createCard`, description: "Create a new card" },
+    { method: "GET", path: `${baseUrl}/getAllCards`, description: "Fetch all cards" },
+    { method: "GET", path: `${baseUrl}/getCard/:id`, description: "Fetch a single card by ID" },
+    { method: "PATCH", path: `${baseUrl}/updateCard/:id`, description: "Partially update a card" },
+    { method: "PUT", path: `${baseUrl}/updateCardFull/:id`, description: "Fully update (overwrite) a card" },
+    { method: "DELETE", path: `${baseUrl}/deleteCard/:id`, description: "Delete a card by ID" },
+    { method: "GET", path: `${baseUrl}/hello`, description: "Test route to confirm the API is live" },
+  ];
+
+  res.status(200).json({
+    success: true,
+    message: "Available API Endpoints",
+    endpoints,
+    total: endpoints.length,
+  });
+});
 //test responses
 app.get("/hello", (req, res) => {
   res.status(200).send("Hello from Node.js!");
