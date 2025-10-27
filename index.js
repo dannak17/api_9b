@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 connectDB();
 
-//this endpoint create a new card
+//This endpoint create a new card
 app.post("/createCard", async (req, res) => {
   try {
     const card = await Card.create(req.body);
@@ -17,7 +17,7 @@ app.post("/createCard", async (req, res) => {
       code: 201,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error creating card:", error.message);
     res.status(500).json({
       success: false,
       message: "Error creating card",
@@ -27,7 +27,7 @@ app.post("/createCard", async (req, res) => {
   }
 });
 
-// This one reads all the cards
+//This endpoint get all the cards
 app.get("/getAllCards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -38,7 +38,7 @@ app.get("/getAllCards", async (req, res) => {
       code: 200,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching cards:", error.message);
     res.status(500).json({
       success: false,
       message: "Error fetching cards",
@@ -47,8 +47,7 @@ app.get("/getAllCards", async (req, res) => {
     });
   }
 });
-
-// This endpoints only read an single actual card
+//This get a single card using by id
 app.get("/getCard/:id", async (req, res) => {
   try {
     const card = await Card.findById(req.params.id);
@@ -66,7 +65,7 @@ app.get("/getCard/:id", async (req, res) => {
       code: 200,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Invalid ID format:", error.message);
     res.status(400).json({
       success: false,
       message: "Invalid ID format",
@@ -75,8 +74,7 @@ app.get("/getCard/:id", async (req, res) => {
     });
   }
 });
-
-// This endpoint partcially update the card (PATCH)
+//update a single card (partially) by id, require a description and id
 app.patch("/updateCard/:id", async (req, res) => {
   try {
     const updatedCard = await Card.findByIdAndUpdate(req.params.id, req.body, {
@@ -94,12 +92,12 @@ app.patch("/updateCard/:id", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Card updated successfully (partial)",
+      message: "Card updated successfully",
       data: updatedCard,
       code: 200,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error updating card (PATCH):", error.message);
     res.status(500).json({
       success: false,
       message: "Error updating card",
@@ -109,7 +107,7 @@ app.patch("/updateCard/:id", async (req, res) => {
   }
 });
 
-// This update all the card (PUT)
+//This endpoint update (full) the card 
 app.put("/updateCardFull/:id", async (req, res) => {
   try {
     const existingCard = await Card.findById(req.params.id);
@@ -121,21 +119,20 @@ app.put("/updateCardFull/:id", async (req, res) => {
       });
     }
 
-    // Rewrite completely the document
     const updatedCard = await Card.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      overwrite: true, 
+      overwrite: true,
       runValidators: true,
     });
 
     res.status(200).json({
       success: true,
-      message: "Card updated successfully (full)",
+      message: "Card updated successfully",
       data: updatedCard,
       code: 200,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error updating card (PUT):", error.message);
     res.status(500).json({
       success: false,
       message: "Error in full update",
@@ -144,8 +141,7 @@ app.put("/updateCardFull/:id", async (req, res) => {
     });
   }
 });
-
-// This delete the card by id
+//This remove the card by id
 app.delete("/deleteCard/:id", async (req, res) => {
   try {
     const deletedCard = await Card.findByIdAndDelete(req.params.id);
@@ -164,7 +160,7 @@ app.delete("/deleteCard/:id", async (req, res) => {
       code: 200,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error deleting card:", error.message);
     res.status(500).json({
       success: false,
       message: "Error deleting card",
@@ -174,12 +170,12 @@ app.delete("/deleteCard/:id", async (req, res) => {
   }
 });
 
-// This is where we put the link app on render to a navegator and with /hello should be return a response (for test use)
+//test responses
 app.get("/hello", (req, res) => {
   res.status(200).send("Hello from Node.js!");
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
