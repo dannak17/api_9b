@@ -6,7 +6,6 @@ const app = express();
 app.use(express.json());
 connectDB();
 
-//This endpoint create a new card
 app.post("/createCard", async (req, res) => {
   try {
     const card = await Card.create(req.body);
@@ -27,7 +26,6 @@ app.post("/createCard", async (req, res) => {
   }
 });
 
-//This endpoint get all the cards
 app.get("/getAllCards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -141,7 +139,7 @@ app.put("/updateCardFull/:id", async (req, res) => {
     });
   }
 });
-//This remove the card by id
+
 app.delete("/deleteCard/:id", async (req, res) => {
   try {
     const deletedCard = await Card.findByIdAndDelete(req.params.id);
