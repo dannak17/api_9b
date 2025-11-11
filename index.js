@@ -1,9 +1,10 @@
 import express from "express";
 import { connectDB } from "./db.js";
 import { Card } from "./models/Card.js";
-
+import cors from "cors";
 const app = express();
 app.use(express.json());
+app.use(cors());
 connectDB();
 
 app.post("/createCard", async (req, res) => {
