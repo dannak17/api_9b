@@ -187,9 +187,18 @@ const CSV_PATH = path.join(__dirname, "students5.csv");
 
 app.get("/getstudents5CSV", (req, res) => {
   const results = [];
+
   fs.createReadStream(CSV_PATH)
     .pipe(csv())
-    .on("data", (data) => results.push(data))
+    .on("data", (data) => {
+      const cleanedData = {};
+      for (const key in data) {
+        const cleanKey = key.replace(/\t/g, "").trim(); 
+        const cleanValue = data[key].replace(/\t/g, "").trim();
+        cleanedData[cleanKey] = cleanValue;
+      }
+      results.push(cleanedData);
+    })
     .on("end", () => {
       res.status(200).json({
         success: true,
