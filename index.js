@@ -165,7 +165,7 @@ app.get("/endpoints", (req, res) => {
       { method: "PUT", path: `${baseUrl}/updateCardFull/:id` },
       { method: "DELETE", path: `${baseUrl}/deleteCard/:id` },
       { method: "GET", path: `${baseUrl}/hello` },
-      { method: "GET", path: `${baseUrl}/gettudents5CSV`, description: "Obtener todos los alumnos desde CSV" },
+      { method: "GET", path: `${baseUrl}/getstudents5CSV`, description: "Obtener todos los alumnos desde CSV" },
       { method: "POST", path: `${baseUrl}/createstudents5CSV`, description: "Agregar un nuevo alumno al CSV" },
     ],
   });
